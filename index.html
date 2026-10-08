@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Student-led engineering in Leonia, NJ. Free bridge design competition workshops this October.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fighting for Engineering Youth">
+<meta property="og:description" content="Student-led engineering in Leonia, NJ. Free bridge design competition workshops this October.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 26'%3E%3Cpolyline points='2,24 10,4 17,24 24,4 32,24' fill='none' stroke='%230B3A40' stroke-width='3' stroke-linejoin='round'/%3E%3Cline x1='10' y1='4' x2='24' y2='4' stroke='%23E4572E' stroke-width='4' stroke-linecap='round'/%3E%3Cline x1='2' y1='24' x2='32' y2='24' stroke='%230E8A8C' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Fighting for Engineering Youth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: a bright sheet. A pale mint hero band holds the headline and the truss diagram, then roomy rounded sections, closing with a title block. */
+:root {
+  color-scheme: light;
+  --paper: #F4FBFA;
+  --panel: #DFF2EF;
+  --ink: #0B3A40;
+  --muted: #35616A;
+  --line: #B3D8D3;
+  --accent: #FFB703;
+  --on-accent: #0B3A40;
+  --accent-text: #0B7A75;
+  --teal: #0E8A8C;
+  --teal-text: #0B6F70;
+  --coral: #E4572E;
+  --coral-text: #B8381A;
+  --font-display: 'Bricolage Grotesque', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  --gutter: clamp(16px, 5vw, 48px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0A2A30;
+    --panel: #0F3A41;
+    --ink: #EAF7F5;
+    --muted: #A6CBC8;
+    --line: #1F5057;
+    --accent: #FFC233;
+    --on-accent: #0A2A30;
+    --accent-text: #5EE0D6;
+    --teal: #4FD1C5;
+    --teal-text: #6FE0D6;
+    --coral: #FF7A59;
+    --coral-text: #FF9A80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0A2A30;
+  --panel: #0F3A41;
+  --ink: #EAF7F5;
+  --muted: #A6CBC8;
+  --line: #1F5057;
+  --accent: #FFC233;
+  --on-accent: #0A2A30;
+  --accent-text: #5EE0D6;
+  --teal: #4FD1C5;
+  --teal-text: #6FE0D6;
+  --coral: #FF7A59;
+  --coral-text: #FF9A80;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--font-body);
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Top bar */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding-block: 20px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font: 800 1.2rem/1.1 var(--font-display);
+  letter-spacing: -0.01em;
+}
+.brand svg { flex: none; }
+.nav { display: flex; flex-wrap: wrap; gap: 6px 26px; }
+.nav a {
+  font: 600 0.95rem/1 var(--font-body);
+  text-decoration: none;
+  color: var(--muted);
+  padding-block: 8px;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+.eyebrow {
+  margin: 0 0 18px;
+  font: 500 0.78rem/1.4 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-right: 0.7em;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: -0.05em;
+}
+
+/* Hero */
+.hero { background: var(--panel); padding-block: clamp(36px, 6vw, 80px); border-radius: 0 0 clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px); }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+.hero-grid > * { min-width: 0; }
+@media (min-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 48px; }
+}
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.8rem, 12.5vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+@media (min-width: 900px) {
+  h1 { font-size: clamp(3rem, 5.6vw, 4.6rem); }
+}
+h1 span { display: block; }
+h1 .hl {
+  display: table;
+  margin: 0.06em 0;
+  padding: 0 0.14em 0.04em;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 0.18em;
+  transform: rotate(-1.2deg);
+}
+.lede { margin: 28px 0 0; max-width: 32em; font-size: 1.2rem; line-height: 1.55; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 1em 1.7em;
+  font: 700 0.98rem/1 var(--font-body);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn-quiet { background: transparent; color: var(--ink); }
+.btn-quiet:hover { background: var(--ink); color: var(--paper); }
+
+.drawing { margin: 0; background: var(--paper); border-radius: 22px; padding: clamp(14px, 3vw, 26px); }
+.drawing svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.drawing figcaption {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font: 400 0.78rem/1.5 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+/* Truss drawing */
+.sv-web { stroke: var(--ink); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sv-top { stroke: var(--coral); stroke-width: 5; }
+.sv-bot { stroke: var(--teal); stroke-width: 5; }
+.sv-node { fill: var(--paper); stroke: var(--ink); stroke-width: 2.5; }
+.sv-load { stroke: var(--ink); stroke-width: 2; fill: none; }
+.sv-head { fill: var(--ink); stroke: none; }
+.sv-ground { stroke: var(--muted); stroke-width: 2; fill: none; }
+.sv-support { fill: var(--paper); stroke: var(--muted); stroke-width: 2; }
+.sv-dim { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.sv-txt { font: 500 11px var(--font-mono); letter-spacing: 0.08em; fill: var(--muted); }
+.sv-txt-c { fill: var(--coral-text); }
+.sv-txt-t { fill: var(--teal-text); }
+.sv-p { font: 500 14px var(--font-mono); fill: var(--ink); }
+
+/* Sections */
+section { padding-block: clamp(56px, 9vw, 100px); scroll-margin-top: 8px; }
+#involved { background: var(--panel); border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0; }
+h2 {
+  margin: 0;
+  max-width: 16em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+h3 { margin: 0; font-family: var(--font-display); font-weight: 700; line-height: 1.1; letter-spacing: -0.015em; }
+
+.mission-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.mission-grid > * { min-width: 0; }
+@media (min-width: 900px) { .mission-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; } }
+.mission-copy { margin: 0 0 32px; max-width: 34em; font-size: 1.15rem; line-height: 1.65; }
+.principles { margin: 0; display: grid; gap: 12px; }
+.principles div { display: grid; gap: 4px; padding: 18px 20px; background: var(--panel); border-radius: 16px; }
+.principles dt { font: 700 1.35rem/1.1 var(--font-display); letter-spacing: -0.01em; }
+.principles dd { margin: 0; max-width: 32em; color: var(--muted); }
+
+.programs { list-style: none; margin: 44px 0 0; padding: 0; display: grid; gap: 16px; }
+.programs li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px 32px;
+  padding: 28px;
+  background: var(--panel);
+  border-radius: 20px;
+}
+.programs li > * { min-width: 0; }
+@media (min-width: 900px) {
+  .programs li { grid-template-columns: 220px minmax(0, 1fr) 270px; align-items: start; }
+}
+.programs h3 { font-size: 1.9rem; }
+.programs p { margin: 0; max-width: 34em; }
+.meta { font: 400 0.8rem/1.6 var(--font-mono); color: var(--muted); }
+.meta b { font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); margin-right: 8px; }
+.meta div + div { margin-top: 4px; }
+
+/* Competition steps: a true sequence, so the numbering carries meaning */
+.sub { margin: 56px 0 20px; font-size: 1.6rem; }
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  gap: 14px;
+  counter-reset: step;
+}
+.steps li { counter-increment: step; background: var(--panel); padding: 18px 18px 22px; min-width: 0; border-radius: 16px; }
+.steps li::before {
+  content: "Step " counter(step);
+  display: block;
+  margin-bottom: 10px;
+  font: 500 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.steps .name { display: block; font: 700 1.5rem/1.1 var(--font-display); letter-spacing: -0.015em; }
+.steps p { margin: 8px 0 0; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+
+.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 20px; margin-top: 44px; }
+.way { background: var(--paper); padding: 28px 24px 32px; min-width: 0; border-radius: 20px; }
+.way .tag {
+  margin: 0 0 16px;
+  font: 500 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.way h3 { font-size: 1.8rem; margin-bottom: 12px; }
+.way p { margin: 0; color: var(--muted); }
+
+/* Title block */
+footer { background: var(--panel); padding-block: 8px clamp(40px, 6vw, 64px); }
+.titleblock {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.titleblock > div { background: var(--paper); padding: 14px 16px 16px; min-width: 0; }
+.titleblock .k {
+  display: block;
+  margin-bottom: 6px;
+  font: 400 0.68rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.titleblock .v { font: 600 0.98rem/1.35 var(--font-body); }
+.titleblock .org { font: 800 1.3rem/1.1 var(--font-display); letter-spacing: -0.01em; }
+.fine { margin: 16px 0 0; font: 400 0.75rem/1.5 var(--font-mono); letter-spacing: 0.04em; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Fighting for Engineering Youth, home">
+      <svg width="34" height="26" viewBox="0 0 34 26" aria-hidden="true">
+        <polyline points="2,24 10,4 17,24 24,4 32,24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <line x1="10" y1="4" x2="24" y2="4" fill="none" stroke="var(--coral)" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2" y1="24" x2="32" y2="24" fill="none" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span>Fighting for Engineering Youth</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#mission">Mission</a>
+      <a href="#competition">Competition</a>
+      <a href="members.html">Members</a>
+      <a href="#involved">Get involved</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Student-led engineering in Leonia, NJ</p>
+        <h1>
+          <span>Fighting for</span>
+          <span class="hl">Engineering</span>
+          <span>Youth</span>
+        </h1>
+        <p class="lede">We give kids who want to know how things work the tools, the mentors and the time to build them.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#involved">Get involved</a>
+          <a class="btn btn-quiet" href="#competition">See the competition</a>
+        </div>
+      </div>
+
+      <figure class="drawing">
+        <svg viewBox="0 0 560 345" role="img" aria-labelledby="truss-title">
+          <title id="truss-title">A truss bridge carrying two downward loads. The top chord is in compression and the bottom chord is in tension.</title>
+
+          <!-- web members -->
+          <polyline class="sv-web" points="40,260 100,150 160,260 220,150 280,260 340,150 400,260 460,150 520,260"/>
+          <!-- chords -->
+          <line class="sv-web sv-top" x1="100" y1="150" x2="460" y2="150"/>
+          <line class="sv-web sv-bot" x1="40" y1="260" x2="520" y2="260"/>
+
+          <!-- supports -->
+          <polygon class="sv-support" points="40,260 27,284 53,284"/>
+          <line class="sv-ground" x1="20" y1="284" x2="60" y2="284"/>
+          <circle class="sv-support" cx="520" cy="270" r="9"/>
+          <line class="sv-ground" x1="500" y1="279" x2="540" y2="279"/>
+
+          <!-- nodes -->
+          <circle class="sv-node" cx="40" cy="260" r="6"/>
+          <circle class="sv-node" cx="160" cy="260" r="6"/>
+          <circle class="sv-node" cx="280" cy="260" r="6"/>
+          <circle class="sv-node" cx="400" cy="260" r="6"/>
+          <circle class="sv-node" cx="520" cy="260" r="6"/>
+          <circle class="sv-node" cx="100" cy="150" r="6"/>
+          <circle class="sv-node" cx="220" cy="150" r="6"/>
+          <circle class="sv-node" cx="340" cy="150" r="6"/>
+          <circle class="sv-node" cx="460" cy="150" r="6"/>
+
+          <!-- loads -->
+          <line class="sv-load" x1="220" y1="50" x2="220" y2="128"/>
+          <polygon class="sv-head" points="220,142 213,126 227,126"/>
+          <text class="sv-p" x="220" y="38" text-anchor="middle">P</text>
+          <line class="sv-load" x1="340" y1="50" x2="340" y2="128"/>
+          <polygon class="sv-head" points="340,142 333,126 347,126"/>
+          <text class="sv-p" x="340" y="38" text-anchor="middle">P</text>
+
+          <!-- member labels -->
+          <text class="sv-txt sv-txt-c" x="106" y="134">COMPRESSION</text>
+          <text class="sv-txt sv-txt-t" x="280" y="296" text-anchor="middle">TENSION</text>
+
+          <!-- span dimension -->
+          <line class="sv-dim" x1="40" y1="290" x2="40" y2="314"/>
+          <line class="sv-dim" x1="520" y1="290" x2="520" y2="314"/>
+          <line class="sv-dim" x1="40" y1="322" x2="248" y2="322"/>
+          <line class="sv-dim" x1="312" y1="322" x2="520" y2="322"/>
+          <line class="sv-dim" x1="40" y1="314" x2="40" y2="330"/>
+          <line class="sv-dim" x1="520" y1="314" x2="520" y2="330"/>
+          <text class="sv-txt" x="280" y="326" text-anchor="middle">SPAN</text>
+        </svg>
+        <figcaption>Fig. 1. The top chord is squeezed and the bottom chord is stretched. Many members share one load.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section id="mission">
+    <div class="wrap mission-grid">
+      <div>
+        <p class="eyebrow">Mission</p>
+        <h2>Kids who ask how things work should get to find out.</h2>
+      </div>
+      <div>
+        <p class="mission-copy">Fighting for Engineering Youth exists so that a child's curiosity about how things work does not depend on what their school can afford or who their family happens to know. We bring materials, working engineers and hands-on projects to young people who want to build.</p>
+        <dl class="principles">
+          <div>
+            <dt>Real tools</dt>
+            <dd>Kits, parts and workspace that kids can use and keep using, not demos behind glass.</dd>
+          </div>
+          <div>
+            <dt>Working mentors</dt>
+            <dd>Engineers, college students and teachers who judge, advise and answer honestly, including when the answer is "I got that wrong too."</dd>
+          </div>
+          <div>
+            <dt>Long runs</dt>
+            <dd>Projects that break and get fixed across several workshops. That is where most of the learning happens.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="competition">
+    <div class="wrap">
+      <p class="eyebrow">This October</p>
+      <h2>Bridge Design Competition</h2>
+      <ul class="programs">
+        <li>
+          <h3>The competition</h3>
+          <p>A series of free workshops where participants design and build a bridge from simple materials, test it under load, and improve it between sessions. The series ends with a final competition where every finished bridge is tested.</p>
+          <div class="meta">
+            <div><b>Cost</b>Free</div>
+            <div><b>When</b>October 2026, dates being confirmed</div>
+            <div><b>Where</b>Local libraries, being confirmed</div>
+          </div>
+        </li>
+        <li>
+          <h3>Classroom kits</h3>
+          <p>Our next goal is to raise money for bridge and building kits for science programs in local schools that have little equipment, and to run workshops there.</p>
+          <div class="meta">
+            <div><b>Status</b>Planning</div>
+            <div><b>For</b>Local school science programs</div>
+          </div>
+        </li>
+      </ul>
+
+      <h3 class="sub">How it works</h3>
+      <ol class="steps">
+        <li><span class="name">Design</span><p>Sketch a bridge and plan how to use the materials.</p></li>
+        <li><span class="name">Build</span><p>Assemble it from simple materials.</p></li>
+        <li><span class="name">Test</span><p>Add weight until the bridge fails.</p></li>
+        <li><span class="name">Improve</span><p>Study the failure and redesign between workshops.</p></li>
+        <li><span class="name">Compete</span><p>Every finished bridge is tested at the final.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="involved">
+    <div class="wrap">
+      <p class="eyebrow">Get involved</p>
+      <h2>Help a kid finish what they started.</h2>
+      <div class="ways">
+        <article class="way">
+          <p class="tag">Give time</p>
+          <h3>Judge or mentor</h3>
+          <p>Engineers, college students and teachers can judge the final competition or help a team improve its design.</p>
+        </article>
+        <article class="way">
+          <p class="tag">Give materials</p>
+          <h3>Sponsor</h3>
+          <p>Donate or fund bridge-building materials such as sticks, glue and weights. We will thank you at the competition and on this site.</p>
+        </article>
+        <article class="way">
+          <p class="tag">Give space</p>
+          <h3>Host</h3>
+          <p>Libraries, schools and community centers can host a workshop. We bring the activity and work around your schedule.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="titleblock">
+      <div><span class="k">Organization</span><span class="org">Fighting for Engineering Youth</span></div>
+      <div><span class="k">Purpose</span><span class="v">Tools, mentors and time for young builders</span></div>
+      <div><span class="k">Sheet</span><span class="v">1 of 1</span></div>
+      <div><span class="k">Revision</span><span class="v">October 2026</span></div>
+    </div>
+    <p class="fine">&copy; 2026 Fighting for Engineering Youth</p>
+  </div>
+</footer>
+
+</body>
+</html>
